@@ -1,21 +1,60 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// next style message send by user and connect firebase and then publish
+import React, {useState} from "react";
+import { StyleSheet } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+
+import Messages from "./Messages";
+import MainScreen from './MainScreen'
+var id = 5;
+
+const Stack = createStackNavigator();
+
+const StackNavigator = ()=>{
+    return(
+
+    <Stack.Navigator>
+        <Stack.Screen name='MainScreen' component={MainScreen} options={{title:"Welcome"}} />
+        <Stack.Screen name='Messages' component={Messages} />
+
+    </Stack.Navigator>
+    )
+}
+
+// const Tweets = ({navigation}) =>(
+    
+        
+//         <>
+//    <Messages message={"this is message"} username={"vinayak"}/>
+//     <Button title="View" onPress={()=>navigation.navigate("TweetDetails")}/>
+//     </>
+// )
+// const TweetDetails = () =>(
+    
+//     <Text>hello</Text>
+   
+// )
+
+
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    const [username, setUsername] = useState('');
+
+
+    return (
+        <NavigationContainer>
+            <StackNavigator />
+        </NavigationContainer>
+       
+       
+          
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+       
+    }
+
+    
 });
