@@ -9,35 +9,35 @@ import {
     TextInput,
     Button,
 } from "react-native";
-import { db } from './firebase';
-import firebase from 'firebase'
-var id =6;
+import { db } from "../config/firebase";
+import firebase from "firebase";
+// var id = 6;
 function Messages({ route }) {
     const [messages, setMessages] = useState([]);
     // const [username, setUsername] = useState("");
     const [input, setInput] = useState("");
 
-    useEffect(()=> {
+    useEffect(() => {
         //run once when the app component loads
-        db.collection('messages')
-        .orderBy('timestamp', 'desc')
-        .onSnapshot(snapshot  => {
-          setMessages(snapshot.docs.map(doc => ({id: doc.id , message: doc.data()})))
-        } )
-      }, [])
-
-
-      
-
+        db.collection("messages")
+            .orderBy("timestamp", "desc")
+            .onSnapshot((snapshot) => {
+                setMessages(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        message: doc.data(),
+                    }))
+                );
+            });
+    }, []);
 
     const handleSend = () => {
-       
-    db.collection('messages').add({
-      message: input,
-      username: route.params.username,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    setInput('');
+        db.collection("messages").add({
+            message: input,
+            username: route.params.username,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+        setInput("");
     };
 
     return (
@@ -47,7 +47,8 @@ function Messages({ route }) {
                     data={messages}
                     renderItem={(item) => {
                         const isUser =
-                            item.item.message.username === route.params.username;
+                            item.item.message.username ===
+                            route.params.username;
                         return (
                             <View
                                 style={
@@ -57,17 +58,15 @@ function Messages({ route }) {
                                 }
                             >
                                 <View style={styles.message}>
-                                    <Text> {item.item.message.username}{" "}</Text>
+                                    <Text> {item.item.message.username} </Text>
                                     <Text style={styles.text}>
-                                        
                                         {item.item.message.message}{" "}
                                     </Text>
                                 </View>
                             </View>
                         );
                     }}
-                    keyExtractor={() => (id = id + 1)}
-                    
+                    keyExtractor={item => item.id}
                 />
             </View>
 
@@ -78,8 +77,11 @@ function Messages({ route }) {
                     onChangeText={(text) => setInput(text)}
                 />
                 <View>
-
-                <Button style={styles.sendBtn} title="Send" onPress={handleSend} />
+                    <Button
+                        style={styles.sendBtn}
+                        title="Send"
+                        onPress={handleSend}
+                    />
                 </View>
             </View>
         </SafeAreaView>
@@ -112,27 +114,27 @@ const styles = StyleSheet.create({
         color: "#000000",
         flex: 1,
         flexWrap: "wrap",
-        fontSize:18
+        fontSize: 18,
     },
 
     input: {
         // justifyContent:"center",
-        flexDirection:"row",
-        alignItems:"center",
-        justifyContent:"space-between",
-       padding:10,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: 10,
         zIndex: 1,
-        position:'absolute',
+        position: "absolute",
         bottom: 0,
-        width:"100%",
+        width: "100%",
         height: 50,
         borderColor: "#000000",
         borderRadius: 10,
         backgroundColor: "#e1e5eb",
     },
-    sendBtn:{
-        padding:10,
-    }
+    sendBtn: {
+        padding: 10,
+    },
 });
 
 export default Messages;

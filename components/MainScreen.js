@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Text, TextInput, Button } from "react-native";
 
-function MainScreen({navigation}) {
-    const [username, setUsername] = useState('');
+function MainScreen({ navigation }) {
+    const [username, setUsername] = useState("");
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Messanger</Text>
@@ -11,12 +11,14 @@ function MainScreen({navigation}) {
                     value={username}
                     style={styles.input}
                     placeholder="Enter your nickname"
-                    onChangeText={text => setUsername(text)}
+                    onChangeText={(text) => setUsername(text)}
                 />
-                <Button 
-                    style={styles.button} 
+                <Button
+                    style={styles.button}
                     title="Enter"
-                    onPress={()=> navigation.navigate("Messages", {username: username})} 
+                    onPress={() =>
+                        navigation.navigate("Messages", { username: username })
+                    }
                 />
             </View>
         </View>
